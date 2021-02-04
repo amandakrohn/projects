@@ -1,0 +1,61 @@
+h1, h2, h3, h4, h5, p, a, label, li {
+    color: $dkd_white;
+    font-family: 'Roboto', sans-serif;
+}
+.menu-item {
+    text-decoration: none;
+    font-family: 'Abril Fatface', cursive;
+    text-align: center;
+    letter-spacing: .2rem;
+    font-weight: 200;
+    max-width: 100%;
+    font-size: 3rem;
+
+    &:hover {
+        color: $dkd_pink;
+        transition: color .5s ease;
+    }
+}
+.h1-parent {
+    width: 100vw;
+    display: flex;
+    justify-content: center;
+}
+
+h1 {
+    font-family: 'Abril Fatface', cursive;
+    font-size: 3rem;
+    text-align: center;
+    letter-spacing: .2rem;
+    font-weight: 200;
+    max-width: 100%;
+    word-wrap: break-word;
+}
+
+label {
+    font-family: 'Roboto', sans-serif;
+    font-weight: 400;
+    font-size: 1.2rem;
+}
+
+button {
+    font-weight: 700;
+    font-size: 1rem;
+    font-family: 'Roboto', sans-serif;
+}
+
+.amount-card {
+    font-family: 'Abril Fatface', cursive;
+    font-size: 3rem;
+
+    .currency {
+        -webkit-text-decoration-line: line-through; //Safari
+        text-decoration-line: line-through;
+    }
+}
+
+.group-card {
+    font-size: 1.6rem;
+    font-weight: 300;
+    text-transform: uppercase;
+}

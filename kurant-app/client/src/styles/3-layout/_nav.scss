@@ -1,0 +1,36 @@
+.nav {
+    position: relative;
+}
+
+.block-container {
+    align-items: center;
+    justify-content: space-evenly;
+}
+
+.menu {
+    z-index: 1;
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 100vw;
+    height: 100vh;
+    border-radius: 10px;
+    background-color: $dkd_black;
+    transition: all 1s ease-in-out;
+
+   
+    li {
+        color: white;
+    }
+
+}
+
+.menu-icon {
+    position: relative;
+    z-index: 15;
+    padding: 1rem 2rem;
+    margin: 0rem 1rem;
+    float: right;
+}
+
+

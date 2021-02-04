@@ -1,0 +1,53 @@
+form {
+    max-width: 400px;
+    width: 70%;
+    margin-top: 5vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+
+        
+    .field {
+        margin: 1.5rem 0;
+        width: 100%;
+        display: flex;
+        flex-direction: row;
+
+        label {
+            display: none;
+        }
+
+        .icon {
+            padding: .2rem;
+            width: 25px;
+            height: 25px;
+            align-self: center;
+        }
+    }
+    button {
+        margin: 2rem 0;
+        align-self: flex-end;
+    }
+}
+
+input, select {
+    width: 100%;
+    padding: .5rem;
+    height: 100%;
+    display: inline;
+    border: none;
+    font-size: large;
+    border-bottom: 2px solid $dkd_white;
+    box-sizing: border-box;
+    background-color: $dkd_black;
+    color: $dkd_white;
+
+    &:hover, &:focus, &:active {
+        outline: none;
+        border-bottom: 2px solid $dkd_pink;
+        transition: border-bottom 0.5s ease-in-out;
+    }
+}
+
+

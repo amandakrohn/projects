@@ -1,0 +1,143 @@
+* {
+    margin:0;
+    padding:0;
+    line-height: 1;
+    box-sizing: border-box;
+}
+
+body {
+    width:100vw;
+    height: 100vh;
+    overflow-x: hidden;
+    background: #ddd; /* fallback for old browsers */
+}
+
+.nav-ul {
+    display: inline-flex;
+}
+
+.link {
+    position: absolute;
+    right: 0;
+    top: 5px;
+    padding: 10px;
+    list-style-type: none;
+    display: flex;
+    align-items: center;
+    justify-content: right;
+}
+
+.text-link {
+    text-decoration: none;
+    color: black;
+    text-transform: uppercase;
+    margin: 10px 10px;
+    padding: 5px;
+    font-size: 2vh;
+    font-family: 'Roboto', sans-serif;
+    font-weight: 400;
+    transition: 1s ease;
+}
+
+.text-link:hover {
+    padding-bottom: 2px;
+    border-bottom: 1px solid rgba(0,0,0,0.7);
+}
+
+.active:hover {
+    border-bottom: none;
+}
+
+.active {
+    color: rgba(0,0,0,0.4);
+}
+
+.text{
+    position: absolute;
+    top: 15vh;
+    left: 5vw;
+    z-index: 1;
+}
+
+h1 {
+    font-family: 'DM Serif Display', serif;
+    font-size: 7vw;
+    width: 70vw;
+    text-shadow: -1px -1px 0 #FFF, 1px -1px 0 #FFF, -1px 1px 0 #FFF, 1px 1px 0 #FFF;
+}
+
+.explanation, .date {
+    margin-top: 2vw;
+    line-height: 1.5;
+    font-size:2vh;
+    width: 39.5vw;
+    font-weight: 100;
+}
+
+.date {
+    font-weight: bold;
+}
+
+.nasaImg{
+    position: absolute;
+    right: 0;
+    top: 20vh;
+    object-fit: cover;
+    height: 70vh;
+    width: 49%;
+    margin-right: 1%;
+    float: right;
+}
+
+.copyright {
+    position: absolute;
+    height: 1vh;
+    width: 50%;
+    top: 91vh;
+    right: 0;
+    font-size: 10px;
+}
+
+.mars_photo {
+    width: 22vw;
+    height: 22vw;
+    object-fit: cover;
+    align-self: center;
+    justify-self: center;
+    position: relative;
+    z-index: -1;
+}
+
+.content__mp {
+    margin-top: 5vh;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+}
+
+.mars_card {
+    padding: 1vw;
+    position: relative;
+}
+
+.mars_date {
+    text-align: center;
+    margin-top: 40vh;
+    color:rgba(255,255,255,0.7);
+    font-family: 'Roboto', sans-serif;
+}
+
+.overlay {
+    position: absolute;
+    top: 1vw;
+    background: linear-gradient(0deg, rgba(0,0,0,1) 0%, rgba(0,0,0,0) 100%);
+    width: 22vw;
+    height: 22vw;
+    opacity: 0;
+    transition: 0.5s ease-in;
+}
+
+.overlay:hover {
+    opacity: 1;
+}

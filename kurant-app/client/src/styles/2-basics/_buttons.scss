@@ -1,0 +1,18 @@
+button {
+    background-color: $dkd_pink;
+    color: $dkd_white;
+    font-weight: bolder;
+    padding: .5rem 1rem;
+    border: none;
+    border-radius: 10px;
+    height: 50px;
+    width: 100%;
+
+    &:hover, &:focus, &:active {
+        background-color: $dkd_pink_shadow;
+        outline: none;
+        border: none;
+    }
+}
+
+

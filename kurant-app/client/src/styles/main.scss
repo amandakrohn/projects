@@ -1,0 +1,33 @@
+
+// Fonts
+@import url('https://fonts.googleapis.com/css2?family=Abril+Fatface&display=swap'); //Abril Fatface
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@100;300;400;500;700&display=swap'); //Roboto
+
+// 1 - Helpers
+@import '1-helpers/normalize';
+@import '1-helpers/variables';
+@import '1-helpers/animations';
+
+// 2 - Basics
+@import '2-basics/buttons';
+@import '2-basics/typography';
+
+// 3 - Layout 
+@import '3-layout/container';
+@import '3-layout/form';
+@import '3-layout/header';
+@import '3-layout/nav';
+@import '3-layout/card';
+
+// 4 - Pages
+@import '4-pages/login';
+@import '4-pages/register';
+
+
+
+
+//allmänt
+
+body {
+    background-color: $dkd_black;
+}
