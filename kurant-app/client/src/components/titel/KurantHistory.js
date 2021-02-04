@@ -1,20 +1,21 @@
-import React, { useEffect, useState, useLayoutEffect } from 'react'
+import React, { useContext, useState, useLayoutEffect } from 'react'
 import { Link } from 'react-router-dom'
+import Axios from 'axios';
 
 import KurantService from '../../services/kurant-service'
-import UserService from '../../services/user-service'
 
-import KurantGraphs from './KurantGraphs'
 import Nav from '../layout/Nav'
-import Kurant from './AddKurant'
+
+import UserContext from '../../context/UserContext'
 
 function KurantHistory() {
+    const { userData } = useContext(UserContext)
+
     const [error, setError] = useState('')
     const [kurantHistory, setKurantHistory] = useState([])
     const [topUsers, setTopUsers] = useState([])
     const [kurantSum, setKurantSum] = useState(0)
     const [loading, setLoading] = useState(false)
-    const [deleteId, setDeleteId] = useState('0')
     
     useLayoutEffect(() => {
         setError('')   
@@ -51,7 +52,7 @@ function KurantHistory() {
 
     async function handleDelete( _id ){
         const res = await KurantService.deleteKurant( _id )
-        console.log(res, "res")
+        console.log(res, "res after handleDelete")
     }
 
     if(loading) {
