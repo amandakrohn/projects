@@ -1,6 +1,5 @@
-import React, { useContext, useState, useLayoutEffect } from 'react'
+import React, { useContext, useState, useEffect } from 'react'
 import { Link } from 'react-router-dom'
-import Axios from 'axios';
 
 import KurantService from '../../services/kurant-service'
 
@@ -16,22 +15,42 @@ function KurantHistory() {
     const [topUsers, setTopUsers] = useState([])
     const [kurantSum, setKurantSum] = useState(0)
     const [loading, setLoading] = useState(false)
-    
-    useLayoutEffect(() => {
-        setError('')   
-        async function fetchData() {
-            try{
-                setLoading(true)
-                const kurantRes = await KurantService.getKurant("titel")
-                const kurantRes_2 = await KurantService.getKurant("titel")
+    const [rerender, setRerender] = useState(false)
 
-                setKurantHistory(kurantRes.map(kurant => kurant))
-                
-                setKurantSum(kurantRes.reduce((prev, curr) => {
+    useEffect(() => {
+        setError('') 
+
+        async function history() {
+            try{
+                console.log("rendering history")
+                const kurantRes = await KurantService.getKurant("titel")
+                setKurantHistory([...kurantRes].map(kurant => kurant))
+            } catch (err){
+                console.log(err)
+                setError(err)
+            }
+        }
+
+        async function sum() {
+            try{
+                console.log("render total sum")
+                const kurantRes = await KurantService.getKurant("titel")
+
+                setKurantSum([...kurantRes].reduce((prev, curr) => {
                     return prev + curr.money;
                 }, 0))
+            } catch (err){
+                console.log(err)
+                setError(err)
+            }
+        }
 
-                setTopUsers(kurantRes_2.reduce(function (acc, curr) {
+        async function top() {
+            try{
+                console.log("render top")
+                const kurantRes = await KurantService.getKurant("titel")
+
+                setTopUsers([...kurantRes].reduce(function (acc, curr) {
                     const found = acc.find(e => e.id === curr.id)
                     if(found) found.money = found.money + curr.money
                     return found ? acc : acc.concat(curr)
@@ -42,29 +61,36 @@ function KurantHistory() {
                 .slice(0,3))
             } catch (err){
                 console.log(err)
-                setError()
+                setError(err)
             }
         }
 
-        fetchData()
+        setLoading(true)
+        history()
+        sum()
+        top()
         setLoading(false);
-    }, [])
+    }, [rerender])
+    
 
     async function handleDelete( _id ){
         try{
+            setLoading(true)
             setError('')
             await KurantService.deleteKurant( userData, _id )
+            setRerender(!rerender)
         } catch(err){
             setError(err)
             console.error(err)
         }
+        setLoading(false)
     }
 
     if(loading) {
         console.log("Loading")
         return(
             <div>
-                {loading ? 'Loading...' : kurantHistory}
+                <p>Loading...</p>
             </div>)
     } else {
         return(
@@ -73,7 +99,7 @@ function KurantHistory() {
             <div className="h1-parent">
                 <h1>Stats - Titel</h1>
             </div>
-                {error ? {error} : ''} 
+                {error ? error : ''} 
             <div>
                 <p> graphs n stuff ? </p>
                 
