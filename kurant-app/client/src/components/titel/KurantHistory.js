@@ -51,8 +51,13 @@ function KurantHistory() {
     }, [])
 
     async function handleDelete( _id ){
-        const res = await KurantService.deleteKurant( _id )
-        console.log(res, "res after handleDelete")
+        try{
+            setError('')
+            await KurantService.deleteKurant( userData, _id )
+        } catch(err){
+            setError(err)
+            console.error(err)
+        }
     }
 
     if(loading) {
