@@ -21,9 +21,18 @@ async function addKurant(group, id, money, date, type, note){
      return res.data
 }
 
-async function deleteKurant( _id ) {
+async function deleteKurant( user, _id ) {
     try {
-        const res = await Axios({method: 'delete', url: URL + 'delete', data: {_id: _id}})
+        const res = await Axios({
+            method: 'delete', 
+            url: URL + 'delete', 
+            data: {
+                _id: _id
+            }, 
+            headers: {
+                'x-auth-token': user.token,
+            }
+        })
         return res.data
     } catch (err){
         console.error(err)
