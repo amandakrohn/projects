@@ -8,10 +8,12 @@ function Kurant() {
     //date, HTML format: YYYY-MM-DD as string
     // behöver lägga till en 0:a innan alla månader 1-9, typ getMonth ger ej 0X, vilket formatet kräver 
     const date = new Date();
-
-    let currentDate = ((date.getMonth() + 1) < 10) ? 
-        (`${date.getFullYear()}-0${date.getMonth()+1}-${date.getDate()}`) 
-        : (`${date.getFullYear()}-${date.getMonth()+1}-${date.getDate()}`) 
+    let currentMonth = date.getMonth() + 1 < 10 ? 
+        `0${date.getMonth() + 1}` : date.getMonth() + 1
+    let currentDay = date.getDate() < 10 ?
+        `0${date.getDate()}` : date.getDate()
+    
+    let currentDate = `${date.getFullYear()}-${currentMonth}-${currentDay}`
 
     const [loading, setLoading] = useState(false)
     const [error, setError] = useState('')
