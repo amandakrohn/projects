@@ -14,7 +14,7 @@ router.get("/kurant", async (req, res) => {
 })
 
 //radera kurant
-router.delete('/delete', async (req, res) => {
+router.delete('/delete', auth, async (req, res) => {
     try {
         const kurantId = req.body._id
         const findKurant = await Kurant.findById(kurantId)
