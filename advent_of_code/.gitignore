@@ -1,0 +1,4 @@
+# all .class files
+*/*.class
+
+*/input.txt
