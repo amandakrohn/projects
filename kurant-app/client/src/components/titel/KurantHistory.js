@@ -22,7 +22,6 @@ function KurantHistory() {
 
         async function history() {
             try{
-                console.log("rendering history")
                 const kurantRes = await KurantService.getKurant("titel")
                 setKurantHistory([...kurantRes].map(kurant => kurant))
             } catch (err){
@@ -33,7 +32,6 @@ function KurantHistory() {
 
         async function sum() {
             try{
-                console.log("render total sum")
                 const kurantRes = await KurantService.getKurant("titel")
 
                 setKurantSum([...kurantRes].reduce((prev, curr) => {
@@ -47,7 +45,6 @@ function KurantHistory() {
 
         async function top() {
             try{
-                console.log("render top")
                 const kurantRes = await KurantService.getKurant("titel")
 
                 setTopUsers([...kurantRes].reduce(function (acc, curr) {
@@ -128,7 +125,7 @@ function KurantHistory() {
                         <div className="kurant-history-item">
                             <p>{kurant.username}</p> 
                             <p> {kurant.money}</p>
-                            <button onClick={e => handleDelete(kurant._id)}>Delete</button>
+                            <button className="delete-btn" onClick={e => handleDelete(kurant._id)}>Delete</button>
                         </div>
                     ))}
                 </div>
@@ -142,58 +139,3 @@ function KurantHistory() {
 
 
 export default KurantHistory
-
-
-/*useEffect(() => {
-        setTopUsers([])
-
-        async function getKurant(){
-            let userKurant = []
-            try {
-                const res = await UserService.getUsers("titel")
-                res.map(user => userKurant.push({username: user.username, money: 0}))
-                return userKurant
-            } catch(err) {
-                setError(err)
-            }
-        }
-
-        async function topKurant( userKurant ) {
-            try {
-                setTopUsers([])
-                for(let kurant in kurantHistory) {
-                    let currentUser = kurantHistory[kurant].username
-                    let money = kurantHistory[kurant].money
-
-                    let userObj = userKurant.find( obj => obj.username === currentUser )
-                    userObj.money = userObj.money + money
-                    console.log(kurantHistory[kurant])
-                    setTopUsers([...topUsers, kurantHistory[kurant]])
-
-                    //change? test frst cus changed without test
-                }
-                
-                console.log(topUsers, "topp1")
-            } catch(error){
-                console.log(error)
-            }
-            
-            
-            /* 
-            userKurant.sort((a,b) => {
-                return b.money - a.money
-            })
-            let top3Users = userKurant.slice(0, 3)
-            setTopUsers(top3Users)*/
-        //}
-        /*
-                async function exec(){
-                    let uk = await getKurant()
-                    let res = await topKurant(uk)
-                    
-                }
-        
-                exec()
-                
-        
-            }, [])*/
