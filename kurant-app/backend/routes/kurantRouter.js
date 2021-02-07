@@ -21,14 +21,14 @@ router.delete('/delete', auth, async (req, res) => {
         if (!findKurant) return  res.status(400).json({msg: "Unable to find kurant ID"})
         const deletedKurant = await Kurant.findByIdAndDelete(kurantId)
         res.json(deletedKurant)
-        console.log("delKur: ", deletedKurant)
+        console.log(deletedKurant)
     } catch( err ){
         res.status(500).json({msg: err.message})
     }
 })
 
 // hantera ny kurant, läggs till till databasen
-router.post("/kurant", async (req, res) => {
+router.post("/kurant", auth, async (req, res) => {
     console.log(req.body)
     try {
         const group = req.body.group
@@ -45,7 +45,7 @@ router.post("/kurant", async (req, res) => {
 
         //validation
         if(!group || !id || !money || !date || !type) 
-            return res.status(400).json({msg: "The form was prob not filled in correclty. Something wrong with the code :("})
+            return res.status(400).json({msg: "The form was not filled in correclty."})
 
         const newKurant = new Kurant({
            username,

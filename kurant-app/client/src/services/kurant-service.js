@@ -2,14 +2,21 @@ import Axios from 'axios';
 
 const URL = 'http://localhost:5000/api/kurant/'
 
-async function addKurant(group, id, money, date, type, note){
-    const res = await Axios.post(URL + "kurant", {
-        group,
-        id,
-        money,
-        date,
-        type,
-        note
+async function addKurant(user, group, id, money, date, type, note){
+    const res = await Axios({
+        method: 'POST', 
+        url: URL + 'kurant', 
+        data: {
+            group,
+            id,
+            money,
+            date,
+            type,
+            note
+        }, 
+        headers: {
+            'x-auth-token': user.token,
+        }
     })
     return res
 }

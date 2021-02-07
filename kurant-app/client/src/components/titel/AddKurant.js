@@ -1,10 +1,14 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useContext } from 'react'
 import { Link } from 'react-router-dom'
 import UserService from '../../services/user-service'
 import KurantService from '../../services/kurant-service'
 import Nav from '../../components/layout/Nav'
 
+import UserContext from '../../context/UserContext'
+
 function Kurant() {
+    const { userData } = useContext(UserContext)
+
     //date, HTML format: YYYY-MM-DD as string
     // behöver lägga till en 0:a innan alla månader 1-9, typ getMonth ger ej 0X, vilket formatet kräver 
     const date = new Date();
@@ -55,7 +59,7 @@ function Kurant() {
         try{
             setError('')
             setLoading(true)
-            const res = await KurantService.addKurant(kurant.group, kurant.id, kurant.money, kurant.date, kurant.type, kurant.note)
+            const res = await KurantService.addKurant(userData, kurant.group, kurant.id, kurant.money, kurant.date, kurant.type, kurant.note)
             setKurant({
                 ...kurant,      //keep id and type unless change ()
                 group: 'titel',
