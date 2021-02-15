@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useContext } from 'react'
 import { Link } from 'react-router-dom'
-import UserService from '../../services/user-service'
-import KurantService from '../../services/kurant-service'
+import UserService from '../../services/UserService'
+import KurantService from '../../services/KurantService'
 import Nav from '../../components/layout/Nav'
 
 

@@ -1,5 +1,5 @@
 import React, {useContext, useState} from 'react'
-import AuthService from '../../services/auth-service'
+import AuthService from '../../services/AuthService'
 import { useHistory } from 'react-router-dom'
 import UserContext from '../../context/UserContext'
 

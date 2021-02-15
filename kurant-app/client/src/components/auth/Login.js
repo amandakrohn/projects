@@ -1,5 +1,5 @@
 import React, {useState, useRef, useContext } from 'react'
-import AuthService from '../../services/auth-service'
+import AuthService from '../../services/AuthService'
 import { Link, useHistory } from 'react-router-dom'
 import { RiMailLine, RiLockPasswordLine } from 'react-icons/ri'
 import UserContext from '../../context/UserContext'

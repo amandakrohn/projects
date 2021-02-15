@@ -1,7 +1,7 @@
-import React, { useContext, useState, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 
-import KurantService from "../../services/kurant-service";
+import KurantService from "../../services/KurantService";
 
 import Nav from "../layout/Nav";
 

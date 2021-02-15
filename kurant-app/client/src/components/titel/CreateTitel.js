@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
-import UserService from "../../services/user-service";
+import UserService from "../../services/UserService";
 import { v4 as uuidv4 } from "uuid";
 import Nav from "../layout/Nav";
 
