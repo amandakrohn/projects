@@ -38,9 +38,8 @@ function Titel() {
       setError("");
       setLoading(true);
 
-      for (const key in titel) {
-        await UserService.addUsers(titel[key], uuidv4(), "titel");
-      }
+      for (const key in titel) await UserService.addUsers(titel[key], uuidv4(), "titel")
+      
     } catch (err) {
       setError(err.response.data.msg);
     }
@@ -60,7 +59,7 @@ function Titel() {
         {error ? <p>{error}</p> : ''}
         <form onSubmit={handleSubmit}>
           <div className="field">
-            <label for="titel_1">Titel #1</label>
+            <label htmlFor="titel_1">Titel #1</label>
             <input
               placeholder="Konglig Öfverdrif"
               type="text"
@@ -72,7 +71,7 @@ function Titel() {
           </div>
 
           <div className="field">
-            <label for="titel_2">Titel #2</label>
+            <label htmlFor="titel_2">Titel #2</label>
             <input
               placeholder="Storasyskon"
               type="text"
@@ -84,7 +83,7 @@ function Titel() {
           </div>
 
           <div className="field">
-            <label for="titel_3">Titel #3</label>
+            <label htmlFor="titel_3">Titel #3</label>
             <input
               placeholder="Konglig Indrif"
               type="text"
@@ -96,7 +95,7 @@ function Titel() {
           </div>
 
           <div className="field">
-            <label for="titel_4">Titel #4</label>
+            <label htmlFor="titel_4">Titel #4</label>
             <input
               placeholder="Konglig Direktifdrif"
               type="text"
@@ -108,7 +107,7 @@ function Titel() {
           </div>
 
           <div className="field">
-            <label for="titel_5">Titel #5</label>
+            <label htmlFor="titel_5">Titel #5</label>
             <input
               placeholder="Samdoquise"
               type="text"
@@ -120,7 +119,7 @@ function Titel() {
           </div>
 
           <div className="field">
-            <label for="titel_6">Titel #6</label>
+            <label htmlFor="titel_6">Titel #6</label>
             <input
               placeholder="Storquisine"
               type="text"
@@ -132,7 +131,7 @@ function Titel() {
           </div>
 
           <div className="field">
-            <label for="titel_7">Titel #7</label>
+            <label htmlFor="titel_7">Titel #7</label>
             <input
               placeholder="Småsyskon #1"
               type="text"
@@ -144,7 +143,7 @@ function Titel() {
           </div>
 
           <div className="field">
-            <label for="titel_8">Titel #8</label>
+            <label htmlFor="titel_8">Titel #8</label>
             <input
               placeholder="Småsyskon #2"
               type="text"

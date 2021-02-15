@@ -4,11 +4,8 @@ import UserService from '../../services/user-service'
 import KurantService from '../../services/kurant-service'
 import Nav from '../../components/layout/Nav'
 
-import UserContext from '../../context/UserContext'
 
 function Kurant() {
-    const { userData } = useContext(UserContext)
-
     //date, HTML format: YYYY-MM-DD as string
     // behöver lägga till en 0:a innan alla månader 1-9, typ getMonth ger ej 0X, vilket formatet kräver 
     const date = new Date();
@@ -47,6 +44,7 @@ function Kurant() {
     }, [])
 
     function updateField(e){
+        console.log(e.target.name, e.target.value)
         setKurant({
             ...kurant,
             [e.target.name]: e.target.value 
@@ -59,7 +57,7 @@ function Kurant() {
         try{
             setError('')
             setLoading(true)
-            const res = await KurantService.addKurant(userData, kurant.group, kurant.id, kurant.money, kurant.date, kurant.type, kurant.note)
+            await KurantService.addKurant(kurant.group, kurant.id, kurant.money, kurant.date, kurant.type, kurant.note)
             setKurant({
                 ...kurant,      //keep id and type unless change ()
                 group: 'titel',
@@ -67,7 +65,6 @@ function Kurant() {
                 date: currentDate,
                 note: '',
             })
-            console.log(res)
         } catch(err){
             setError(err.response.data.msg)
         }
@@ -84,20 +81,19 @@ function Kurant() {
             {error ? <p> {error} </p> : ''}
             <form onSubmit={handleSubmit}>
             <div className="field">
-                <label for="id"><b>Name</b></label>
+                <label htmlFor="id"><b>Name</b></label>
                 <select
                     name="id"
-                    onClick={updateField}
-                    required
-                    defaultValue={'DEFAULT'}>
-                    <option value={'DEFAULT'} disabled hidden>Vem</option>
+                    onChange={updateField}
+                    required>
+                    <option disabled hidden>Vem</option>
                         {titel.map((user) => (
                             <option key={user.id} value={user.id}>{user.username}</option>
                         ))}
                 </select>
             </div>
             <div className="field">
-                <label for="money">Hur mycket?</label>
+                <label htmlFor="money">Hur mycket?</label>
                 <input 
                     type="number"
                     name="money"
@@ -108,7 +104,7 @@ function Kurant() {
                     required />
           </div>
           <div className="field">
-            <label for="date">Datum</label>
+            <label htmlFor="date">Datum</label>
             <input
                 type="date"
                 name="date"
@@ -117,10 +113,10 @@ function Kurant() {
                 />
            </div>
            <div className="field">
-                <label for="type">Typ</label>
+                <label htmlFor="type">Typ</label>
                 <select
                     name="type"
-                    onClick={updateField}
+                    onChange={updateField}
                     required
                     defaultValue={'DEFAULT'}>
                     <option value={'DEFAULT'} disabled hidden>Typ av kurant</option>
@@ -130,7 +126,7 @@ function Kurant() {
                 </select>
             </div>
             <div className="field">
-                <label for="note">Note</label>
+                <label htmlFor="note">Note</label>
                 <input
                     placeholder="Note"
                     type="textarea"
