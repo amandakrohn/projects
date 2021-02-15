@@ -1,11 +1,11 @@
 import Axios from 'axios';
 
-const URL = 'http://localhost:5000/api/kurant/'
+const URL = 'http://localhost:5000/kurant/'
 
-async function addKurant(user, group, id, money, date, type, note){
+async function addKurant(group, id, money, date, type, note){
     const res = await Axios({
         method: 'POST', 
-        url: URL + 'kurant', 
+        url: URL, 
         data: {
             group,
             id,
@@ -13,33 +13,34 @@ async function addKurant(user, group, id, money, date, type, note){
             date,
             type,
             note
-        }, 
-        headers: {
-            'x-auth-token': user.token,
         }
     })
+
     return res
 }
 
  async function getKurant( group ){
-     const res = await Axios.get(URL + "kurant", {
-         group
+     const res = await Axios({
+        method: 'GET',
+        url: URL,
+        data: {
+            group
+        }
      })
+
      return res.data
 }
 
-async function deleteKurant( user, _id ) {
+async function deleteKurant( _id ) {
     try {
         const res = await Axios({
-            method: 'delete', 
-            url: URL + 'delete', 
+            method: 'DELETE', 
+            url: URL + _id, 
             data: {
                 _id: _id
-            }, 
-            headers: {
-                'x-auth-token': user.token,
             }
         })
+        console.log("kurantservice: ", res.data)
         return res.data
     } catch (err){
         console.error(err)
