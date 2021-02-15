@@ -12,6 +12,6 @@ Dependencies:
     - mongoose
     - jsonwebtoken
     - bcryptjs
-
     - axios
     - react router dom
+    - cookieparser
