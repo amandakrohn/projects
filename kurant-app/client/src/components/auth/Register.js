@@ -6,7 +6,7 @@ import { RiMailLine, RiLockPasswordLine, RiLockPasswordFill, RiUser3Line } from 
 
 function Register() {
     //context
-    const { setUserData } = useContext(UserContext)
+    const { getLoggedIn } = useContext( UserContext ) 
 
     //history
     const history = useHistory()
@@ -26,21 +26,18 @@ function Register() {
         e.preventDefault()
 
         try{
-            setError('')
             setLoading(true)
-            const registerRes = await AuthService.register(nameRef.current.value, emailRef.current.value, passwordRef.current.value, passwordConfRef.current.value)
-            setUserData({
-                token: registerRes.data.token ,
-                user: registerRes.data.user
-            })
-            localStorage.setItem("auth-token", registerRes.data.token)
+            setError('')
+            await AuthService.register(nameRef.current.value, emailRef.current.value, passwordRef.current.value, passwordConfRef.current.value)
+            await getLoggedIn()
             history.push("/")
+            setLoading(false)
         } catch(err){
-            setError(err.response.data.msg)
+            setError(err)
+            //setError(err.response.data.msg)
             console.log(error)
         }
 
-        setLoading(false)
     }
 
     return (

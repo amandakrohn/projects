@@ -1,13 +1,12 @@
 import React, {useState, useRef, useContext } from 'react'
 import AuthService from '../../services/auth-service'
 import { Link, useHistory } from 'react-router-dom'
-import UserContext from '../../context/UserContext'
 import { RiMailLine, RiLockPasswordLine } from 'react-icons/ri'
+import UserContext from '../../context/UserContext'
 
 function Login() {
     //context
-    const { setUserData } = useContext(UserContext)
-
+    const { getLoggedIn } = useContext( UserContext )
     //history
     const history = useHistory()
 
@@ -24,21 +23,18 @@ function Login() {
         e.preventDefault()
 
         try{
-            setError('')
             setLoading(true)
-            const loginRes = await AuthService.login(emailRef.current.value, passwordRef.current.value)
-            setUserData({
-                token: loginRes.data.token,
-                user: loginRes.data.user
-            })
-            localStorage.setItem("auth-token", loginRes.data.token)
+            setError('')
+            await AuthService.login(emailRef.current.value, passwordRef.current.value)
+            await getLoggedIn()
             history.push("/")
+            setLoading(false)
         } catch(err){
-            setError(err.response.data.msg)
-            console.log(error)
+            setError(err)
+            //setError(err.response.data.msg)
+            console.error(error)
         }
        
-        setLoading(false)
     }
 
     return (

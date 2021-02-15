@@ -1,12 +1,11 @@
 import React, {useContext, useState} from 'react'
 import AuthService from '../../services/auth-service'
-import UserContext from '../../context/UserContext'
 import { useHistory } from 'react-router-dom'
+import UserContext from '../../context/UserContext'
 
-
-
-function Logout() {    
-    const { setUserData } = useContext(UserContext)
+function Logout() {   
+    //context
+    const { getLoggedIn } = useContext( UserContext ) 
 
     const history = useHistory()
 
@@ -18,13 +17,11 @@ function Logout() {
 
         try{
             setError('')
-            AuthService.logout()
-            setUserData({
-                token: undefined,
-                user: undefined,
-            }) 
+            await AuthService.logout()
+            await getLoggedIn()
             history.push("/login")          
         } catch(err){
+            console.error(err)
             setError(err)
         }
     }
