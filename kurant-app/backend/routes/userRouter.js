@@ -1,8 +1,10 @@
 const router = require('express').Router()
 const User = require('../models/userModel')
+const auth = require('../middelware/auth')
+
 
 // ska hämta alla users mha find()
-router.get("/addTitel", async (req, res) => {
+router.get("/titel", auth, async (req, res) => {
     try {
         const users = await User.find(req.group)
         res.json(users)
@@ -12,7 +14,7 @@ router.get("/addTitel", async (req, res) => {
 })
 
 // handle register of a titel user
-router.post("/addTitel", async (req, res) => {
+router.post("/titel", auth, async (req, res) => {
     try {
         const username = req.body.name
         const group = req.body.group

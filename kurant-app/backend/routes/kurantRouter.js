@@ -4,31 +4,18 @@ const Kurant = require('../models/kurantModel')
 const User = require('../models/userModel')
 
 // ska hämta all kurant
-router.get("/kurant", async (req, res) => {
+router.get("/", auth, async (req, res) => {
     try {
         const kurants = await Kurant.find(req.group)
         res.json(kurants)
+        console.log("kurants", kurants)
     } catch(err){
         res.status(500).json({msg : err.message})
     }
 })
 
-//radera kurant
-router.delete('/delete', auth, async (req, res) => {
-    try {
-        const kurantId = req.body._id
-        const findKurant = await Kurant.findById(kurantId)
-        if (!findKurant) return  res.status(400).json({msg: "Unable to find kurant ID"})
-        const deletedKurant = await Kurant.findByIdAndDelete(kurantId)
-        res.json(deletedKurant)
-        console.log(deletedKurant)
-    } catch( err ){
-        res.status(500).json({msg: err.message})
-    }
-})
-
 // hantera ny kurant, läggs till till databasen
-router.post("/kurant", auth, async (req, res) => {
+router.post("/", auth, async (req, res) => {
     console.log(req.body)
     try {
         const group = req.body.group
@@ -62,6 +49,23 @@ router.post("/kurant", auth, async (req, res) => {
         console.log("Kurant added successfully: " + savedKurant)
     } catch(err) {
         res.status(500).json({msg : err.message})
+    }
+})
+
+//radera kurant
+router.delete('/:id', auth, async (req, res) => {
+    try {
+        const id = req.body._id
+        
+        const findKurant = await Kurant.findById(id)
+        if (!findKurant) return  res.status(400).json({msg: "Unable to find kurant ID"})
+
+        const deletedKurant = await Kurant.findByIdAndDelete(id)
+        res.json(deletedKurant)
+        
+        console.log(deletedKurant)
+    } catch( err ){
+        res.status(500).json({msg: err.message})
     }
 })
 

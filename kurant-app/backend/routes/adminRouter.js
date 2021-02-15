@@ -5,9 +5,9 @@ const jwt = require('jsonwebtoken')
 const auth = require('../middelware/auth')
 
 // handle register
-router.post("/register", async (req, res) => {
+router.post("/", async (req, res) => {
     try {
-        let { username, email, password, passwordCheck } = req.body
+        const { username, email, password, passwordCheck } = req.body
 
         //validation
         if(!email || !password || !passwordCheck)
@@ -28,7 +28,7 @@ router.post("/register", async (req, res) => {
 
         const salt = await bcrypt.genSalt()
         const passwordHash = await bcrypt.hash(password, salt)
-
+        console.log(salt, passwordHash)
         const newAdmin = new Admin({
             email,
             password: passwordHash,
@@ -36,9 +36,18 @@ router.post("/register", async (req, res) => {
         })
 
         const savedAdmin = await newAdmin.save()
-        res.json(savedAdmin)        
+
+        const token = jwt.sign({ user: savedAdmin._id }, process.env.JWT_SECRET)
+
+        res.cookie("token", token, { 
+            httpOnly: true,
+            secure: true,
+            sameSite: "none"     
+        }).send()
+        
         console.log("admin registerd successfully")
     } catch(err) {
+        console.error(err)
         res.status(500).json({msg : err.message})
     }
 })
@@ -55,56 +64,47 @@ router.post('/login', async ( req, res ) => {
         const user = await Admin.findOne({ email: email })
         if(!user) return res.status(400).json({ msg: "No account with this email exists."})
 
-        const isMatch = await bcrypt.compare(password, user.password)
-        if(!isMatch) return res.status(400).json({ msg: "Incorrect password."})
+        const correctPassword = await bcrypt.compare(password, user.password)
+        if(!correctPassword) return res.status(400).json({ msg: "Incorrect password."})
 
-        const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET)
+        const token = jwt.sign({ user: user._id }, process.env.JWT_SECRET)
 
-        res.json({
-            token,
-            user: {
-                id: user._id,
-                displayName: user.displayName,
-            }
-        })
+        res.cookie("token", token, { 
+            httpOnly: true,
+            secure: true,
+            sameSite: "none"
+        }).send()
         
     } catch (err) {
+        console.error(err)
         res.status(500).json({msg : err.message})
     }
 })
 
-router.get("/", auth, async (req, res) => {
-    const user = await Admin.findById(req.user)
-    res.json({
-        displayName: user.displayName,
-        id: user._id,
-    })
-})
-
-router.delete("/delete", auth, async(res, req) => {
+router.get("/logout", (req, res) => {
     try{
-        const deletedUser = await Admin.findByIdAndDelete(req.user)
-        res.json(deletedUser)
-    } catch(err){
-        res.status(500).json({msg : err.message})
+        res.cookie("token", "", {
+            httpOnly: true,
+            expires: new Date(0),   //set expiration date to now to remove the cookie
+            secure: true,
+            sameSite: "none"
+        }).send()
+    } catch(err) {
+        console.error(err)
     }
 })
 
-router.post("/tokenIsValid", async(req, res) => {
-    try{
-        const token = req.header('x-auth-token')
+router.get("/loggedIn", (req, res) => {
+    try {
+        const token = req.cookies.token
         if(!token) return res.json(false)
 
-        const verified = jwt.verify(token, process.env.JWT_SECRET);
-        if(!verified) return res.json(false)
-
-        const admin = await Admin.findById(verified.id)
-        if(!admin) return res.json(false)
-
-        return res.json(true)
+        jwt.verify(token, process.env.JWT_SECRET)
+        res.send(true)
     } catch(err){
-        res.status(500).json({msg : err.message})
+        console.error(err)
     }
 })
+
 
 module.exports = router;
