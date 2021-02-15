@@ -29,7 +29,6 @@ async function login(email, password) {
 
 async function logout(){
     const logoutRes = await axios.get(URL + "logout")
-    console.log("logged out:", logoutRes)
     return logoutRes
 }
 
